@@ -2,7 +2,7 @@
 
 SwiftKitten is a Swift autocompleter for Sublime Text, via the adorable 
 [SourceKitten](https://github.com/jpsim/SourceKitten.git) framework.
-Faster than XCode !
+Faster than Xcode !
 
 
 ![](demo.gif)
