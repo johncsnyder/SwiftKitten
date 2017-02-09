@@ -216,6 +216,8 @@ class SwiftKittenEventListener(sublime_plugin.EventListener):
         compilerargs = "-sdk " + sdk if sdk != "" else ""
         compilerargs += " ".join(("-F " + path for path in frameworks_paths))
         compilerargs += " " + self.get_settings(view, "extra_compilerargs")
+        if compilerargs == " ":
+            return ""
         return compilerargs
 
 
@@ -292,7 +294,7 @@ class SwiftKittenEventListener(sublime_plugin.EventListener):
     def get_completion_cmd(self, view, text, offset):
         """Get completion command.
         """
-        cmd = "{sourcekitten_binary} complete --text {text} --offset {offset} --compilerargs -- {compilerargs}"
+        cmd = "{sourcekitten_binary} complete --text {text} --offset {offset} -- {compilerargs}"
         sourcekitten_binary = self.get_settings(view,
             "sourcekitten_binary", "sourcekitten")
         compilerargs = self.get_compilerargs(view)
