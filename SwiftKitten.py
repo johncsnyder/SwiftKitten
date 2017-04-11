@@ -134,9 +134,9 @@ class SwiftKittenEventListener(sublime_plugin.EventListener):
             view.add_regions(
                 "swiftkitten.diagnostics",
                 [Region(pos,pos+1) for pos in self.errors.keys()],
-                "constant",
-                "",
-                sublime.DRAW_STIPPLED_UNDERLINE | sublime.DRAW_NO_OUTLINE | sublime.DRAW_NO_FILL
+                "invalid",
+                "dot",
+                sublime.DRAW_OUTLINED
             )
 
             self._update_linting_status(view)
@@ -286,21 +286,22 @@ class SwiftKittenEventListener(sublime_plugin.EventListener):
         """
         settings = load_settings("SwiftKitten.sublime-settings")
         project_data = view.window().project_data()
-        return project_data.get(key, settings.get(key, default))
+        return project_data and project_data.get(key) or settings.get(key, default)
 
 
     def get_completion_cmd(self, view, text, offset):
         """Get completion command.
         """
-        cmd = "{sourcekitten_binary} complete --text {text} --offset {offset} --compilerargs -- {compilerargs}"
+        cmd = "{sourcekitten_binary} complete --text {text} --offset {offset} {suffix}"
         sourcekitten_binary = self.get_settings(view,
             "sourcekitten_binary", "sourcekitten")
-        compilerargs = self.get_compilerargs(view)
+        compilerargs = shlex.quote(self.get_compilerargs(view).strip())
+        suffix = "-- " + compilerargs if compilerargs else ""
         return cmd.format(
             sourcekitten_binary=sourcekitten_binary,
             text=shlex.quote(text),
             offset=offset,
-            compilerargs=shlex.quote(compilerargs)
+            suffix=suffix
         )
 
 
