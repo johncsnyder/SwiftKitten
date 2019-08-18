@@ -80,7 +80,7 @@ are only needed once and requesting them via SourceKitten can take a while
 frameworks from autocompletion results (See `exclude_framework_globals` in 
 package settings).
 
-The framework cache is persistant between sessions. It is saved to
+The framework cache is persistent between sessions. It is saved to
 Sublime's cache folder on saving a view, and is loaded next time SwiftKitten
 is loaded.
 
@@ -213,7 +213,7 @@ console (``ctrl+` ``) and see if any error messages are reported.
 	a sublime project file).
 
 - Parse Xcode project to get file list and embedded frameworks 
-	(similiar to SourceKittenDaemon).
+	(similar to SourceKittenDaemon).
 
 - Add Xcode build, run and debug commands. Build system is not
 	flexible enough. Specify the xcode project in sublime project
